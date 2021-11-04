@@ -1,0 +1,6 @@
+{
+     "databaseURL": "mongodb+srv://user:pwd@#fs2d@allegrotest.nauah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+     "databaseName": "",
+     "collection": "",
+     "timeout": 7000
+}
