@@ -40,15 +40,21 @@ async function getPagesInfo(link, indx, itemsObj) {
                     response: 10000,
                },
           });
-          const pages = parseInt(resp.body.match(/(?<=_1h7wt mh36_8 mvrt_8 _3db39_3i0GV _3db39_XEsAE">)(.*?)(?=<\/span>)/m));
-          let itemsArr = resp.body.match(/(?<=class="_w7z6o _uj8z7 meqh_en mpof_z0 mqu1_16 _9c44d_2vTdY  " href=")(.*?)(?=m7er_k4 _9c44d_w7AeH)/gm);
+          const pages = parseInt(resp.body.match(/(?<=class="_1h7wt mh36_8 mvrt_8 _3db39_3i0GV _3db39_XEsAE">)(.*?)(?=<\/span>)/m));
+          let itemsArr = resp.body.match(/(?<=class="_w7z6o _uj8z7 meqh_en mpof_z0 mqu1_16 m6ax_n4 _6a66d_2vTdY  " href=")(.*?)(?=m7er_k4 _6a66d_w7AeH)/gm);
           
+          if (itemsArr == null) {
+               itemsArr = resp.body.match()
+          }
+
+
           // there we scrape every item for exact data and input into mongo DB
           await itemsArr.forEach(item =>scrapeItems(item, itemsObj));
           return pages;
      } catch (error) {
-          console.log(error);
+          console.log(`STOPPED ON PAGE: ${indx}.\nPropably 429 or 403 error, make sure your timeout is high enough to not get rate limited or temporary banned fast`);
           await timeout(10000);
+          return 0
      }
 }
 
@@ -95,7 +101,7 @@ function addItems(dbUrl, dbName, dbCollection, item) {
           });
 
      } catch (e) {
-          console.log(e);
+          console.log("Check your mongodb connection and make sure you filled all data in settings.json file");
      }
 
 }
