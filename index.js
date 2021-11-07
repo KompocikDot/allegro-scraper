@@ -2,6 +2,8 @@ const { default: got } = require("got");
 const fs = require("fs");
 const mongo = require("mongodb").MongoClient;
 
+var err = false;
+
 async function scraper(link, settings) {
      try {
           let itemsObj = [];
@@ -11,9 +13,13 @@ async function scraper(link, settings) {
 
           if (pagesAmount >= 2) {
                for (x = 2; x <= pagesAmount; x++) {
-                    await getPagesInfo(link, x, itemsObj);
-                    await timeout(settings.timeout);
-                    console.log(`Scraped page number ${x}/${pagesAmount}`)
+                    if (err) {
+                         return;
+                    } else {
+                         await getPagesInfo(link, x, itemsObj);
+                         await timeout(settings.timeout);
+                         console.log(`Scraped page number ${x}/${pagesAmount}`)
+                    }
                }
           }
 
@@ -54,6 +60,7 @@ async function getPagesInfo(link, indx, itemsObj) {
      } catch (error) {
           console.log(`STOPPED ON PAGE: ${indx}.\nPropably 429 or 403 error, make sure your timeout is high enough to not get rate limited or temporary banned fast`);
           await timeout(10000);
+          err = true;
           return 0
      }
 }
