@@ -46,7 +46,7 @@ async function getPagesInfo(link, indx, itemsObj) {
                     response: 10000,
                },
           });
-          const pages = parseInt(resp.body.match(/(?<=class="_1h7wt mh36_8 mvrt_8 _3db39_3i0GV _3db39_XEsAE">)(.*?)(?=<\/span>)/m));
+          const pages = parseInt(resp.body.match(/(?<=class="_1h7wt mh36_8 mvrt_8 _6d89c_3i0GV _6d89c_XEsAE">)(.*?)(?=<\/span>)/m));
           let itemsArr = resp.body.match(/(?<=class="_w7z6o _uj8z7 meqh_en mpof_z0 mqu1_16 m6ax_n4 _6a66d_2vTdY  " href=")(.*?)(?=m7er_k4 _6a66d_w7AeH)/gm);
           
           if (itemsArr == null) {
